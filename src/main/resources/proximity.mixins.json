@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.chyzman.proximity.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "common.LivingEntityMixin",
+    "common.PlayerManagerMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "proximity",
+  "version": "${version}",
+
+  "name": "Proximity",
+  "description": "",
+  "authors": [
+    "chyzman"
+  ],
+  "contact": {},
+
+  "license": "LGPL-3.0",
+  "icon": "assets/proximity/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.chyzman.proximity.client.ProximityClient"
+    ],
+    "main": [
+      "com.chyzman.proximity.Proximity"
+    ]
+  },
+
+  "mixins": [
+    "proximity.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  },
+
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_1309": ["com/chyzman/proximity/pond/LivingEntityDuck"]
+    }
+  }
+}

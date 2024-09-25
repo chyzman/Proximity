@@ -1,0 +1,10 @@
+{
+  "text.config.proximity.title": "Proximity",
+
+  "text.config.proximity.section.Server": "Server",
+
+  "gamerule.proximity.category.proximity": "Proximity",
+
+  "attribute.name.generic.proximity.speech_distance": "Speech Distance",
+  "attribute.name.generic.proximity.hearing_distance": "Hearing Distance"
+}
