@@ -3,50 +3,65 @@ package com.chyzman.proximity.api;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.network.message.MessageType;
 import net.minecraft.network.message.SentMessage;
-import net.minecraft.network.message.SignedMessage;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.server.network.ServerPlayerEntity;
 
-import java.util.Set;
-
-import static com.chyzman.proximity.Proximity.PROXIMITY_CONFIG;
+import static com.chyzman.proximity.registry.ProximityEntityAttributes.HEARING_DISTANCE;
 import static com.chyzman.proximity.registry.ProximityEntityAttributes.SPEECH_DISTANCE;
 
 public class ProximityHandler {
     public static double CURRENT_PROXIMITY_DISTANCE = 0;
 
-    public static boolean broadcastProximityChat(Entity speaker, SignedMessage message, MessageType.Parameters params, double distance) {
-        if (!(speaker instanceof LivingEntity living)) return false;
-        return broadcastProximityChat(
-                new ChatContext(speaker, message, params),
-                ProximityLocation.fromEntity(living, getProximityAttributeValue(living, SPEECH_DISTANCE, 1)),
-                PROXIMITY_CONFIG.chatMessages.distance(),
-                Set.of()
-        );
-    }
-
     public static boolean broadcastProximityChat(
             ChatContext context,
             ProximityLocation origin,
-            double distance,
-            @NotNull Set<Entity> haveHeard
+            double distance
     ) {
-        if (haveHeard.contains(context.speaker())) return false;
-
-        haveHeard.add(context.speaker());
-
         var message = SentMessage.of(context.message());
+
+        if (context.speaker() instanceof ServerPlayerEntity player) player.sendChatMessage(message, false, context.senderParameters() != null ? context.senderParameters() : context.parameters());
+
+        var speakerDistance = getProximityAttributeValue(context.speaker(), SPEECH_DISTANCE, distance);
+
+        for (ServerPlayerEntity listener : context.playerManager().getPlayerList()) {
+            if (listener == context.speaker()) continue;
+            var forced = ProximityEvents.FORCE_ABLE_TO_HEAR.invoker().forceHearing(context.speaker(), listener);
+            switch (forced) {
+                case DEFAULT:
+                    var listenerLocation = ProximityEvents.MODIFY_PROXIMITY_LOCATION.invoker().modifySpeechLocation(message.content(), listener, ProximityLocation.fromEntity(listener, 1));
+                    if (listenerLocation.world() != origin.world()) continue;
+                    var listenerDistance = getProximityAttributeValue(listener, HEARING_DISTANCE, distance);
+                    var distanceBetween = origin.pos().distanceTo(listenerLocation.pos());
+                    if (distanceBetween > speakerDistance || distanceBetween > listenerDistance) continue;
+                case TRUE:
+                    listener.sendChatMessage(message, false, context.parameters());
+            }
+        }
 
         return true;
     }
 
-    public static double getProximityAttributeValue(LivingEntity entity, RegistryEntry<EntityAttribute> attribute, double base) {
+    public static boolean broadcastGlobalChat(
+            ChatContext context
+    ) {
+        var message = SentMessage.of(context.message());
+
+        if (context.speaker() instanceof ServerPlayerEntity player) player.sendChatMessage(message, false, context.senderParameters() != null ? context.senderParameters() : context.parameters());
+
+        for (ServerPlayerEntity listener : context.playerManager().getPlayerList()) {
+            if (listener == context.speaker()) continue;
+            var forced = ProximityEvents.FORCE_ABLE_TO_HEAR.invoker().forceHearing(context.speaker(), listener);
+            if (forced.orElse(true)) listener.sendChatMessage(message, false, context.parameters());
+        }
+
+        return true;
+    }
+
+    public static double getProximityAttributeValue(Entity entity, RegistryEntry<EntityAttribute> attribute, double base) {
+        if (!(entity instanceof LivingEntity living)) return base;
         CURRENT_PROXIMITY_DISTANCE = base;
-        var returned = entity.getAttributeValue(attribute);
+        var returned = living.getAttributeValue(attribute);
         CURRENT_PROXIMITY_DISTANCE = 0;
         return returned;
     }

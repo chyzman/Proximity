@@ -1,10 +1,32 @@
 {
   "text.config.proximity.title": "Proximity",
 
-  "text.config.proximity.section.Server": "Server",
+  "text.config.proximity.category.chatMessages": "Proximity Chat Messages",
 
-  "gamerule.proximity.category.proximity": "Proximity",
+  "text.config.proximity.option.chatMessages.enabled": "Enabled",
+
+  "text.config.proximity.option.chatMessages.distance": "Distance",
+
+  "text.config.proximity.category.commandMessages": "Proximity Command Messages",
+
+  "text.config.proximity.option.commandMessages.enabled": "Enabled",
+
+  "text.config.proximity.option.commandMessages.distance": "Distance",
+
+  "text.config.proximity.category.mumbling": "Mumble Command",
+
+  "text.config.proximity.option.mumbling.enabled": "Enabled",
+
+  "text.config.proximity.option.mumbling.distance": "Distance",
+
+  "text.config.proximity.option.shouting": "Shout Command",
 
   "attribute.name.generic.proximity.speech_distance": "Speech Distance",
-  "attribute.name.generic.proximity.hearing_distance": "Hearing Distance"
+  "attribute.name.generic.proximity.hearing_distance": "Hearing Distance",
+
+  "commands.proximity.mumble.display.incoming": "%s mumbles: %s",
+  "commands.proximity.mumble.display.outgoing": "You mumble: %s",
+
+  "commands.proximity.shout.display.incoming": "%s shouts: %s",
+  "commands.proximity.shout.display.outgoing": "You shout: %s"
 }

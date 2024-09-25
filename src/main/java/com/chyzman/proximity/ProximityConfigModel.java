@@ -16,10 +16,7 @@ public class ProximityConfigModel {
     public ProximityOptions commandMessages = new ProximityOptions(true, 512);
 
     @Nest
-    public ProximityOptions gameMessages = new ProximityOptions(false, 2048);
-
-    @Nest
-    public ProximityOptions mumbling = new ProximityOptions(true, 0);
+    public ProximityOptions mumbling = new ProximityOptions(true, 1);
 
     @Sync(Option.SyncMode.OVERRIDE_CLIENT)
     public boolean shouting = true;

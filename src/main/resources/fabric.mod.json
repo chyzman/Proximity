@@ -15,9 +15,6 @@
 
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "com.chyzman.proximity.client.ProximityClient"
-    ],
     "main": [
       "com.chyzman.proximity.Proximity"
     ]
@@ -31,11 +28,5 @@
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "${minecraft_version}"
-  },
-
-  "custom": {
-    "loom:injected_interfaces": {
-      "net/minecraft/class_1309": ["com/chyzman/proximity/pond/LivingEntityDuck"]
-    }
   }
 }

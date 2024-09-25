@@ -4,6 +4,7 @@
   "package": "com.chyzman.proximity.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "common.EntityAttributeInstanceMixin",
     "common.LivingEntityMixin",
     "common.PlayerManagerMixin"
   ],

@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.event.EventFactory;
 import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.entity.Entity;
 import net.minecraft.text.Text;
-import org.jetbrains.annotations.Nullable;
 
 public class ProximityEvents {
 
@@ -37,7 +36,7 @@ public class ProximityEvents {
 
     @FunctionalInterface
     public interface ModifyProximityLocation {
-       ProximityLocation modifySpeechLocation(Text message, Entity speaker, ProximityLocation location);
+       ProximityLocation modifySpeechLocation(Text message, Entity target, ProximityLocation location);
     }
 
     /**
