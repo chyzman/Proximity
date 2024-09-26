@@ -12,8 +12,6 @@ import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 
-import static com.chyzman.proximity.Proximity.PROXIMITY_CONFIG;
-import static com.chyzman.proximity.registry.ProximityEntityAttributes.SPEECH_DISTANCE;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class ShoutCommand {

@@ -1,0 +1,21 @@
+{
+  "attribute.name.generic.proximity.speech_distance": "Speech Distance",
+  "attribute.name.generic.proximity.hearing_distance": "Hearing Distance",
+
+  "commands.proximity.mumble.display.incoming": "%s mumbles: %s",
+  "commands.proximity.mumble.display.outgoing": "You mumble: %s",
+
+  "commands.proximity.shout.display.incoming": "%s shouts: %s",
+  "commands.proximity.shout.display.outgoing": "You shout: %s",
+
+  "gamerule.proximity.category.proximity": "Proximity",
+
+  "gamerule.proximity.chatDistance": "Chat Distance",
+  "gamerule.proximity.chatDistance.description": "The maximum distance that players can hear chat messages from other players.\n-1 to disable.",
+
+  "gamerule.proximity.commandDistance": "Command Distance",
+  "gamerule.proximity.commandDistance.description": "The maximum distance that players can hear command messages from other players.\n-1 to disable.",
+
+  "gamerule.proximity.mumbleDistance": "Mumble Distance",
+  "gamerule.proximity.mumbleDistance.description": "The maximum distance that players can hear mumble messages from other players.\n-1 to disable."
+}
