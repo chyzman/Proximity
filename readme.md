@@ -1,9 +1,9 @@
 # Proximity
 A simple Proximity Text chat mod/API
 
-[![curseforge](https://img.shields.io/badge/-CurseForge-gray?style=for-the-badge&logo=curseforge&labelColor=orange)](https://www.curseforge.com/minecraft/mc-mods/proximity) 
-[![modrinth](https://img.shields.io/badge/-modrinth-gray?style=for-the-badge&labelColor=green&labelWidth=15&logo=appveyor&logoColor=white)](https://modrinth.com/mod/proximity)
-[![release](https://img.shields.io/badge/Source-grey?style=for-the-badge&logo=github)](https://github.com/chyzman/proximity)
+[![Badge showing the amount of downloads on modrinth](https://img.shields.io/badge/dynamic/json?color=2d2d2d&colorA=5da545&label=&suffix=%20downloads%20&query=downloads&url=https://api.modrinth.com/v2/project/GyF8sewW&style=flat-square&logo=modrinth&logoColor=2d2d2d)](https://modrinth.com/mod/proximity)
+[![Badge showing the amount of downloads on curseforge](https://cf.way2muchnoise.eu/full_1107098_downloads.svg?badge_style=flat)](https://www.curseforge.com/minecraft/mc-mods/proximity)
+[![Badge linking to issues on github](https://img.shields.io/badge/dynamic/json?query=value&url=https%3A%2F%2Fimg.shields.io%2Fgithub%2Fissues-raw%2Fchyzman%2Fproximity.json&label=&logo=github&color=2d2d2d&style=flat-square&labelColor=6e5494&logoColor=2d2d2d&suffix=%20issues)](https://github.com/chyzman/proximity/issues)
 
 Proximity modifies the vanilla chat system in order to make it proximity based. This includes:
 1. Configurable chat distance
