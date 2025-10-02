@@ -8,6 +8,6 @@ import net.minecraft.world.World;
 public record ProximityLocation(Vec3d pos, RegistryKey<World> world, double multiplier) {
 
     public static ProximityLocation fromEntity(Entity entity, double multiplier) {
-        return new ProximityLocation(entity.getEyePos(), entity.getWorld().getRegistryKey(), multiplier);
+        return new ProximityLocation(entity.getEyePos(), entity.getEntityWorld().getRegistryKey(), multiplier);
     }
 }
