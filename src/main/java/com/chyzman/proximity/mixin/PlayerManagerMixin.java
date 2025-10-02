@@ -1,4 +1,4 @@
-package com.chyzman.proximity.mixin.common;
+package com.chyzman.proximity.mixin;
 
 import com.chyzman.proximity.api.ChatContext;
 import com.chyzman.proximity.api.ProximityHandler;
@@ -35,8 +35,9 @@ public abstract class PlayerManagerMixin {
         MessageType.Parameters params,
         CallbackInfo ci
     ) {
-        if (!getServer().getGameRules().get(ProximityGameRules.PROXIMITY_ENABLED).get()) return;
-        var distance = getServer().getGameRules().get(ProximityGameRules.CHAT_DISTANCE).get();
+        var gamerules = getServer().getOverworld().getGameRules();
+        if (!gamerules.get(ProximityGameRules.PROXIMITY_ENABLED).get()) return;
+        var distance = gamerules.get(ProximityGameRules.CHAT_DISTANCE).get();
         if (distance < 0) return;
         if (ProximityHandler.broadcastProximityChat(
             new ChatContext(
@@ -69,6 +70,7 @@ public abstract class PlayerManagerMixin {
         var distance = getServer().getGameRules().get(ProximityGameRules.COMMAND_DISTANCE).get();
         if (distance < 0) return;
         var sender = source.getEntity();
+        if (sender == null) return;
         if (ProximityHandler.broadcastProximityChat(
             new ChatContext(
                 ((PlayerManager) (Object) this),

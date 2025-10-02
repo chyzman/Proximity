@@ -1,13 +1,14 @@
-package com.chyzman.proximity.mixin.common;
+package com.chyzman.proximity.mixin;
 
-import com.chyzman.proximity.registry.ProximityEntityAttributes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.registry.Registries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import static com.chyzman.proximity.registry.ProximityEntityAttributes.HEARING_DISTANCE;
+import static com.chyzman.proximity.registry.ProximityEntityAttributes.SPEECH_DISTANCE;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
@@ -15,7 +16,7 @@ public class LivingEntityMixin {
     @Inject(method = "createLivingAttributes", at = @At("RETURN"))
     private static void injectProximityAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         cir.getReturnValue()
-            .add(Registries.ATTRIBUTE.getEntry(ProximityEntityAttributes.SPEECH_DISTANCE.value()), 0)
-            .add(Registries.ATTRIBUTE.getEntry(ProximityEntityAttributes.HEARING_DISTANCE.value()), 0);
+            .add(SPEECH_DISTANCE, 0)
+            .add(HEARING_DISTANCE, 0);
     }
 }

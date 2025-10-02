@@ -1,18 +1,19 @@
 package com.chyzman.proximity.api;
 
+import com.chyzman.proximity.Proximity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.network.message.SentMessage;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
 
 import static com.chyzman.proximity.registry.ProximityEntityAttributes.HEARING_DISTANCE;
 import static com.chyzman.proximity.registry.ProximityEntityAttributes.SPEECH_DISTANCE;
 
 public class ProximityHandler {
-    public static double CURRENT_PROXIMITY_DISTANCE = 0;
-
     public static boolean broadcastProximityChat(
         ChatContext context,
         ProximityLocation origin,
@@ -68,15 +69,23 @@ public class ProximityHandler {
         return true;
     }
 
+    private static final Identifier TEMP_MODIFIER = Proximity.id("temp");
+
     public static double getProximityAttributeValue(
         Entity entity,
         RegistryEntry<EntityAttribute> attribute,
         double base
     ) {
         if (!(entity instanceof LivingEntity living)) return base;
-        CURRENT_PROXIMITY_DISTANCE = base;
-        var returned = living.getAttributeValue(attribute);
-        CURRENT_PROXIMITY_DISTANCE = 0;
+        var instance = living.getAttributeInstance(attribute);
+        if (instance == null) return base;
+        instance.addTemporaryModifier(new EntityAttributeModifier(
+            TEMP_MODIFIER,
+            base,
+            EntityAttributeModifier.Operation.ADD_VALUE
+        ));
+        var returned = instance.getValue();
+        instance.removeModifier(TEMP_MODIFIER);
         return returned;
     }
 }

@@ -11,7 +11,7 @@
   "gamerule.proximity.category.proximity": "Proximity",
 
   "gamerule.proximity.enableProximity": "Enable Proximity",
-  "gamerule.proximity.enableProximity.description": "Should Proximity be enabled?",
+  "gamerule.proximity.enableProximity.description": "Should chat and command messages be proximity-based?",
 
   "gamerule.proximity.chatDistance": "Chat Distance",
   "gamerule.proximity.chatDistance.description": "The maximum distance that players can hear chat messages from other players.\n-1 to disable.",
