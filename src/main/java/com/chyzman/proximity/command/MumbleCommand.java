@@ -27,7 +27,6 @@ public class MumbleCommand {
                         var source = context.getSource();
                         var sender = source.getEntity();
                         if (sender == null) return 0;
-                        var gamerules = source.getWorld().getGameRules();
                         MessageArgumentType.getSignedMessage(
                             context,
                             "message",
@@ -43,7 +42,7 @@ public class MumbleCommand {
                                 ProximityHandler.getProximityAttributeValue(
                                     sender,
                                     SPEECH_DISTANCE,
-                                    gamerules.get(MUMBLE_DISTANCE).get()
+                                    source.getWorld().getGameRules().get(MUMBLE_DISTANCE).get()
                                 )
                             )
                         );

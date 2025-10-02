@@ -12,6 +12,7 @@ import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 
+import static com.chyzman.proximity.registry.ProximityMessageTypes.*;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class ShoutCommand {
@@ -20,25 +21,19 @@ public class ShoutCommand {
             LiteralCommandNode<ServerCommandSource> literalCommandNode = dispatcher.register(
                 literal("shout")
                     .then(CommandManager.argument("message", MessageArgumentType.message()).executes(context -> {
-                        var sender = context.getSource().getEntity();
+                        var source = context.getSource();
+                        var sender = source.getEntity();
                         if (sender == null) return 0;
                         MessageArgumentType.getSignedMessage(
                             context, "message", message -> {
-                                ServerCommandSource serverCommandSource = context.getSource();
-                                PlayerManager playerManager = serverCommandSource.getServer().getPlayerManager();
+                                var playerManager = source.getServer().getPlayerManager();
                                 ProximityHandler.broadcastGlobalChat(
                                     new ChatContext(
                                         playerManager,
                                         sender,
                                         message,
-                                        MessageType.params(
-                                            ProximityMessageTypes.SHOUT_COMMAND_INCOMING,
-                                            serverCommandSource
-                                        ),
-                                        MessageType.params(
-                                            ProximityMessageTypes.SHOUT_COMMAND_OUTGOING,
-                                            serverCommandSource
-                                        )
+                                        MessageType.params(SHOUT_COMMAND_INCOMING, source),
+                                        MessageType.params(SHOUT_COMMAND_OUTGOING, source)
                                     )
                                 );
                             }
