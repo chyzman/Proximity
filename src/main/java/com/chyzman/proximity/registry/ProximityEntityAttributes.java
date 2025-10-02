@@ -12,23 +12,23 @@ import static com.chyzman.proximity.Proximity.id;
 public class ProximityEntityAttributes {
 
     public static final RegistryEntry<EntityAttribute> SPEECH_DISTANCE = register(
-            "generic.speech_distance",
-            new ClampedEntityAttribute(
-                    "attribute.name.generic." + Proximity.MODID + ".speech_distance",
-                    0,
-                    0,
-                    Double.MAX_VALUE
-            )
+        "generic.speech_distance",
+        new ClampedEntityAttribute(
+            "attribute.name.generic." + Proximity.MODID + ".speech_distance",
+            0,
+            0,
+            Double.MAX_VALUE
+        )
     );
 
     public static final RegistryEntry<EntityAttribute> HEARING_DISTANCE = register(
-            "generic.hearing_distance",
-            new ClampedEntityAttribute(
-                    "attribute.name.generic." + Proximity.MODID + ".hearing_distance",
-                    0,
-                    0,
-                    Double.MAX_VALUE
-            )
+        "generic.hearing_distance",
+        new ClampedEntityAttribute(
+            "attribute.name.generic." + Proximity.MODID + ".hearing_distance",
+            0,
+            0,
+            Double.MAX_VALUE
+        )
     );
 
 

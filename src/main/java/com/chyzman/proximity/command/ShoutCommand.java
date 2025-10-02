@@ -18,25 +18,33 @@ public class ShoutCommand {
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             LiteralCommandNode<ServerCommandSource> literalCommandNode = dispatcher.register(
-                    literal("shout")
-                            .then(CommandManager.argument("message", MessageArgumentType.message()).executes(context -> {
-                                var sender = context.getSource().getEntity();
-                                if (sender == null) return 0;
-                                MessageArgumentType.getSignedMessage(context, "message", message -> {
-                                    ServerCommandSource serverCommandSource = context.getSource();
-                                    PlayerManager playerManager = serverCommandSource.getServer().getPlayerManager();
-                                    ProximityHandler.broadcastGlobalChat(
-                                            new ChatContext(
-                                                    playerManager,
-                                                    sender,
-                                                    message,
-                                                    MessageType.params(ProximityMessageTypes.SHOUT_COMMAND_INCOMING, serverCommandSource),
-                                                    MessageType.params(ProximityMessageTypes.SHOUT_COMMAND_OUTGOING, serverCommandSource)
-                                            )
-                                    );
-                                });
-                                return 1;
-                            })));
+                literal("shout")
+                    .then(CommandManager.argument("message", MessageArgumentType.message()).executes(context -> {
+                        var sender = context.getSource().getEntity();
+                        if (sender == null) return 0;
+                        MessageArgumentType.getSignedMessage(
+                            context, "message", message -> {
+                                ServerCommandSource serverCommandSource = context.getSource();
+                                PlayerManager playerManager = serverCommandSource.getServer().getPlayerManager();
+                                ProximityHandler.broadcastGlobalChat(
+                                    new ChatContext(
+                                        playerManager,
+                                        sender,
+                                        message,
+                                        MessageType.params(
+                                            ProximityMessageTypes.SHOUT_COMMAND_INCOMING,
+                                            serverCommandSource
+                                        ),
+                                        MessageType.params(
+                                            ProximityMessageTypes.SHOUT_COMMAND_OUTGOING,
+                                            serverCommandSource
+                                        )
+                                    )
+                                );
+                            }
+                        );
+                        return 1;
+                    })));
             dispatcher.register(CommandManager.literal("s").redirect(literalCommandNode));
         });
     }

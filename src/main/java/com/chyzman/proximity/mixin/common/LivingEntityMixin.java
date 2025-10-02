@@ -15,7 +15,7 @@ public class LivingEntityMixin {
     @Inject(method = "createLivingAttributes", at = @At("RETURN"))
     private static void injectProximityAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         cir.getReturnValue()
-                .add(Registries.ATTRIBUTE.getEntry(ProximityEntityAttributes.SPEECH_DISTANCE.value()), 0)
-                .add(Registries.ATTRIBUTE.getEntry(ProximityEntityAttributes.HEARING_DISTANCE.value()), 0);
+            .add(Registries.ATTRIBUTE.getEntry(ProximityEntityAttributes.SPEECH_DISTANCE.value()), 0)
+            .add(Registries.ATTRIBUTE.getEntry(ProximityEntityAttributes.HEARING_DISTANCE.value()), 0);
     }
 }

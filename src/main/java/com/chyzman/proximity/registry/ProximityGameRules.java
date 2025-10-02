@@ -13,20 +13,24 @@ import static com.chyzman.proximity.Proximity.id;
 
 public class ProximityGameRules {
     public static final CustomGameRuleCategory PROXIMITY_GAMERULE_CATEGORY = new CustomGameRuleCategory(
-            id("proximity"),
-            Text.translatable("gamerule.proximity.category.proximity").formatted(Formatting.BOLD, Formatting.YELLOW)
+        id("proximity"),
+        Text.translatable("gamerule.proximity.category.proximity").formatted(Formatting.BOLD, Formatting.YELLOW)
+    );
+
+    public static final GameRules.Key<GameRules.BooleanRule> PROXIMITY_ENABLED = register(
+        "enableProximity", GameRuleFactory.createBooleanRule(true)
     );
 
     public static final GameRules.Key<DoubleRule> CHAT_DISTANCE = register(
-            "chatDistance", GameRuleFactory.createDoubleRule(128, -1)
+        "chatDistance", GameRuleFactory.createDoubleRule(128, -1)
     );
 
     public static final GameRules.Key<DoubleRule> COMMAND_DISTANCE = register(
-            "commandDistance", GameRuleFactory.createDoubleRule(128, -1)
+        "commandDistance", GameRuleFactory.createDoubleRule(128, -1)
     );
 
     public static final GameRules.Key<DoubleRule> MUMBLE_DISTANCE = register(
-            "mumbleDistance", GameRuleFactory.createDoubleRule(1, -1)
+        "mumbleDistance", GameRuleFactory.createDoubleRule(1, -1)
     );
 
     public static void init() {

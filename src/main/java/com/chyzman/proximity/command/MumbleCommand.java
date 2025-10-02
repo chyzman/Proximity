@@ -20,31 +20,42 @@ public class MumbleCommand {
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             LiteralCommandNode<ServerCommandSource> literalCommandNode = dispatcher.register(
-                    literal("mumble")
-                            .then(CommandManager.argument("message", MessageArgumentType.message()).executes(context -> {
-                                var sender = context.getSource().getEntity();
-                                if (sender == null) return 0;
-                                MessageArgumentType.getSignedMessage(context, "message", message -> {
-                                    ServerCommandSource serverCommandSource = context.getSource();
-                                    PlayerManager playerManager = serverCommandSource.getServer().getPlayerManager();
-                                    ProximityHandler.broadcastProximityChat(
-                                            new ChatContext(
-                                                    playerManager,
-                                                    sender,
-                                                    message,
-                                                    MessageType.params(ProximityMessageTypes.MUMBLE_COMMAND_INCOMING, serverCommandSource),
-                                                    MessageType.params(ProximityMessageTypes.MUMBLE_COMMAND_OUTGOING, serverCommandSource)
-                                            ),
-                                            ProximityLocation.fromEntity(sender, 1),
-                                            ProximityHandler.getProximityAttributeValue(
-                                                    sender,
-                                                    SPEECH_DISTANCE,
-                                                    sender.getServer().getGameRules().get(ProximityGameRules.MUMBLE_DISTANCE).get()
-                                            )
-                                    );
-                                });
-                                return 1;
-                            })));
+                literal("mumble")
+                    .then(CommandManager.argument("message", MessageArgumentType.message()).executes(context -> {
+                        var sender = context.getSource().getEntity();
+                        if (sender == null) return 0;
+                        var gameRules = context.getSource().getWorld().getGameRules();
+                        MessageArgumentType.getSignedMessage(
+                            context, "message", message -> {
+                                ServerCommandSource serverCommandSource = context.getSource();
+                                PlayerManager playerManager = serverCommandSource.getServer().getPlayerManager();
+                                ProximityHandler.broadcastProximityChat(
+                                    new ChatContext(
+                                        playerManager,
+                                        sender,
+                                        message,
+                                        MessageType.params(
+                                            ProximityMessageTypes.MUMBLE_COMMAND_INCOMING,
+                                            serverCommandSource
+                                        ),
+                                        MessageType.params(
+                                            ProximityMessageTypes.MUMBLE_COMMAND_OUTGOING,
+                                            serverCommandSource
+                                        )
+                                    ),
+                                    ProximityLocation.fromEntity(sender, 1),
+                                    ProximityHandler.getProximityAttributeValue(
+                                        sender,
+                                        SPEECH_DISTANCE,
+                                        gameRules.get(ProximityGameRules.PROXIMITY_ENABLED).get() ? gameRules
+                                            .get(ProximityGameRules.MUMBLE_DISTANCE)
+                                            .get() : -1
+                                    )
+                                );
+                            }
+                        );
+                        return 1;
+                    })));
             dispatcher.register(CommandManager.literal("m").redirect(literalCommandNode));
         });
     }

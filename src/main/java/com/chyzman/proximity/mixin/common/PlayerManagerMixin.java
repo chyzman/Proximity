@@ -21,50 +21,67 @@ import static com.chyzman.proximity.registry.ProximityEntityAttributes.SPEECH_DI
 @Mixin(PlayerManager.class)
 public abstract class PlayerManagerMixin {
 
-    @Shadow public abstract MinecraftServer getServer();
+    @Shadow
+    public abstract MinecraftServer getServer();
 
-    @Inject(method = "broadcast(Lnet/minecraft/network/message/SignedMessage;Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/network/message/MessageType$Parameters;)V",
-            at = @At("HEAD"),
-            cancellable = true)
-    private void proximitify$chat(SignedMessage message, ServerPlayerEntity sender, MessageType.Parameters params, CallbackInfo ci) {
+    @Inject(
+        method = "broadcast(Lnet/minecraft/network/message/SignedMessage;Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/network/message/MessageType$Parameters;)V",
+        at = @At("HEAD"),
+        cancellable = true
+    )
+    private void proximitify$chat(
+        SignedMessage message,
+        ServerPlayerEntity sender,
+        MessageType.Parameters params,
+        CallbackInfo ci
+    ) {
+        if (!getServer().getGameRules().get(ProximityGameRules.PROXIMITY_ENABLED).get()) return;
         var distance = getServer().getGameRules().get(ProximityGameRules.CHAT_DISTANCE).get();
         if (distance < 0) return;
         if (ProximityHandler.broadcastProximityChat(
-                new ChatContext(
-                        ((PlayerManager)(Object)this),
-                        sender,
-                        message,
-                        params
-                ),
-                ProximityLocation.fromEntity(sender, 1),
-                ProximityHandler.getProximityAttributeValue(
-                        sender,
-                        SPEECH_DISTANCE,
-                        distance
-                )
+            new ChatContext(
+                ((PlayerManager) (Object) this),
+                sender,
+                message,
+                params
+            ),
+            ProximityLocation.fromEntity(sender, 1),
+            ProximityHandler.getProximityAttributeValue(
+                sender,
+                SPEECH_DISTANCE,
+                distance
+            )
         )) ci.cancel();
     }
 
-    @Inject(method = "broadcast(Lnet/minecraft/network/message/SignedMessage;Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/network/message/MessageType$Parameters;)V",
-            at = @At("HEAD"),
-            cancellable = true)
-    private void proximitify$commands(SignedMessage message, ServerCommandSource source, MessageType.Parameters params, CallbackInfo ci) {
+    @Inject(
+        method = "broadcast(Lnet/minecraft/network/message/SignedMessage;Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/network/message/MessageType$Parameters;)V",
+        at = @At("HEAD"),
+        cancellable = true
+    )
+    private void proximitify$commands(
+        SignedMessage message,
+        ServerCommandSource source,
+        MessageType.Parameters params,
+        CallbackInfo ci
+    ) {
+        if (!getServer().getGameRules().get(ProximityGameRules.PROXIMITY_ENABLED).get()) return;
         var distance = getServer().getGameRules().get(ProximityGameRules.COMMAND_DISTANCE).get();
         if (distance < 0) return;
         var sender = source.getEntity();
         if (ProximityHandler.broadcastProximityChat(
-                new ChatContext(
-                        ((PlayerManager)(Object)this),
-                        sender,
-                        message,
-                        params
-                ),
-                ProximityLocation.fromEntity(sender, 1),
-                ProximityHandler.getProximityAttributeValue(
-                        sender,
-                        SPEECH_DISTANCE,
-                        distance
-                )
+            new ChatContext(
+                ((PlayerManager) (Object) this),
+                sender,
+                message,
+                params
+            ),
+            ProximityLocation.fromEntity(sender, 1),
+            ProximityHandler.getProximityAttributeValue(
+                sender,
+                SPEECH_DISTANCE,
+                distance
+            )
         )) ci.cancel();
     }
 
