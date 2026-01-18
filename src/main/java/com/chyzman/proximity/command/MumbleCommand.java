@@ -42,7 +42,7 @@ public class MumbleCommand {
                                 ProximityHandler.getProximityAttributeValue(
                                     sender,
                                     SPEECH_DISTANCE,
-                                    source.getWorld().getGameRules().get(MUMBLE_DISTANCE).get()
+                                    source.getWorld().getGameRules().getValue(MUMBLE_DISTANCE)
                                 )
                             )
                         );

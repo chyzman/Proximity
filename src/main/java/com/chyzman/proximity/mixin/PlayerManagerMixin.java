@@ -36,8 +36,8 @@ public abstract class PlayerManagerMixin {
         CallbackInfo ci
     ) {
         var gamerules = getServer().getOverworld().getGameRules();
-        if (!gamerules.get(ProximityGameRules.PROXIMITY_ENABLED).get()) return;
-        var distance = gamerules.get(ProximityGameRules.CHAT_DISTANCE).get();
+        if (!gamerules.getValue(ProximityGameRules.PROXIMITY_ENABLED)) return;
+        var distance = gamerules.getValue(ProximityGameRules.CHAT_DISTANCE);
         if (distance < 0) return;
         if (ProximityHandler.broadcastProximityChat(
             new ChatContext(
@@ -66,8 +66,8 @@ public abstract class PlayerManagerMixin {
         MessageType.Parameters params,
         CallbackInfo ci
     ) {
-        if (!getServer().getGameRules().get(ProximityGameRules.PROXIMITY_ENABLED).get()) return;
-        var distance = getServer().getGameRules().get(ProximityGameRules.COMMAND_DISTANCE).get();
+        if (!getServer().getOverworld().getGameRules().getValue(ProximityGameRules.PROXIMITY_ENABLED)) return;
+        var distance = getServer().getOverworld().getGameRules().getValue(ProximityGameRules.COMMAND_DISTANCE);
         if (distance < 0) return;
         var sender = source.getEntity();
         if (sender == null) return;
